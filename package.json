@@ -1,0 +1,32 @@
+{
+  "name": "listed",
+  "version": "1.0.0",
+  "description": "This application is made to facilitate the understanding of what individuals want and how to get them exactly that. ",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "develop": "concurrently \"cd server && npm run watch\"cd client && npm start\"",
+    "install": "cd server && npm i && cd ../client && npm i",
+    "seed": "",
+    "build": "cd client && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JimmySolis/listed.git"
+  },
+  "keywords": [
+    "listed",
+    "gifts",
+    "christmas",
+    "birthday"
+  ],
+  "author": "Jimmy Solis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JimmySolis/listed/issues"
+  },
+  "homepage": "https://github.com/JimmySolis/listed#readme",
+  "devDependencies": {
+    "concurrently": "^7.4.0"
+  }
+}
