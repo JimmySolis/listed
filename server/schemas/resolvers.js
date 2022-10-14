@@ -31,11 +31,11 @@ const resolvers = {
             const token = signToken(user);
             return { token, user };
         },
-        login: async ( parent, { email, password }) => {
-            const user = await User.findOne({ email });
+        login: async ( parent, { username, password }) => {
+            const user = await User.findOne({ username });
 
             if (!user){
-                throw AuthenticationError('No user found with this email address')
+                throw new AuthenticationError('No user found with this email address')
             }
 
             const correctPw = await user.isCorrectPassword(password);
@@ -57,7 +57,10 @@ const resolvers = {
 
                 await User.findOneAndUpdate(
                     { _id: context.user._id },
-                    { $addToSet: { lists: list._id }}
+                    { $addToSet: { lists: list._id }},
+                    { new: true ,
+                      runValidators: true,
+                    }
                 );
 
                 return list;
@@ -74,11 +77,24 @@ const resolvers = {
 
                 await User.findOneAndUpdate(
                     { _id: context.user._id},
-                    { $addToSet: { gifts: gift._id }}
+                    { $addToSet: { gifts: gift._id }},
+                    { new: true ,
+                      runValidators: true,
+                    }
                 );
                 return gift;
             }
             throw new AuthenticationError('You need to be logged in!');
+        },
+        removeUser: async (parent, { username, password }, context) => {
+            if(context.user) {
+                const deletedUser = await User.findOneAndDelete({
+                   _id: context.user._id,
+                   username,
+                   password 
+                })
+            }
+            throw new AuthenticationError('You need to be logged in!')
         },
         removeList: async (parent, { listId }, context) => {
             if(context.user) {
@@ -89,12 +105,15 @@ const resolvers = {
 
                 await User.findByOneAndUpdate(
                     { _id: context.user._id },
-                    { $pull: { lists: list._id }}
+                    { $pull: { lists: list._id }},
+                    { new: true ,
+                      runValidators: true,
+                    }
                 );
 
                 return list;
             }
-            throw AuthenticationError('You need to be logged in!');
+            throw new AuthenticationError('You need to be logged in!');
         },
         removeGift: async (parent, { giftId }, context) => {
             if(context.user){
@@ -105,12 +124,15 @@ const resolvers = {
 
                 await List.findByIdAndUpdate(
                     { _id: context.user._id},
-                    { $pull: { gifts: gift._id}}
+                    { $pull: { gifts: gift._id}},
+                    { new: true ,
+                      runValidators: true,
+                    }
                 );
 
                 return gift;
             }
-            throw AuthenticationError('You need to be logged in!');
+            throw new AuthenticationError('You need to be logged in!');
         }
     }
 };
