@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 
 import {  MUTATION_ADDLIST } from '../../utils/mutations';
@@ -26,7 +26,7 @@ const MakeAList = () => {
             });
 
           setListName('');
-          window.location.reload();
+          window.location.reload()
         } catch (err){
           console.error(err);
         }
@@ -69,7 +69,7 @@ const MakeAList = () => {
                 </div>
 
                 <div className='col-12 col-lg-3'>
-                    <button className='btn btn-primary btn-block py-3' type='submit'>
+                 <button className='btn btn-primary btn-block py-3' type='submit'>
                         Submit List Name
                     </button>
                 </div>
