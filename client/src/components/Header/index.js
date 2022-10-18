@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from 'react-router-dom';
 
 import Auth from '../../utils/auth';
+import SearchBar from "../SearchBar";
 
 const Header = () => {
     const logout = (event) => {
@@ -15,9 +16,8 @@ const Header = () => {
           <Link className="text-light" to="/">
             <h1 className="m-0">Listed</h1>
           </Link>
-          <p className="m-0">Whats in your list?</p>
-        </div>
-        <div>
+          <p className="m-0">Whats in your list?</p>   
+          <SearchBar/> 
           {Auth.loggedIn() ? (
             <>
               <Link className="btn btn-lg btn-info m-2" to="/me">

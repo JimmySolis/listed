@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, default: mongoose } = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const userSchema = new Schema({
@@ -34,7 +34,15 @@ userSchema.pre('save', async function (next) {
     }
 
     next();
+});
+
+userSchema.pre('remove', function(next) {
+    const ListsMade = mongoose.model('List');
+
+    ListsMade.remove({ _id: { $in: this.lists }}).then(() => next());
 })
+
+
 
 userSchema.methods.isCorrectPassword = async function (password) {
     return bcrypt.compare(password, this.password);

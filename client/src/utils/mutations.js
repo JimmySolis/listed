@@ -1,14 +1,29 @@
 import { gql } from '@apollo/client';
 
 export const MUTATION_LOGINUSER = gql`
-mutation login($username: String!, $password: String!) {
-    login(username: $username, password: $password) {
-      token
-      user {
-        username
+mutation login($email: String!, $password: String!) {
+  login(email: $email, password: $password) {
+    token
+    user {
+      _id
+      username
+      email
+      lists {
+        _id
+        listName
+        listMaker
+        createdAt
+        gifts {
+          _id
+          giftName
+          giftUrl
+          giftMaker
+          createdAt
+        }
       }
     }
   }
+}
 `;
 
 export const  MUTATION_SIGNUPUSER = gql`
@@ -24,29 +39,25 @@ mutation addUser($username: String!, $email: String!, $password: String!) {
 
 export const  MUTATION_ADDLIST = gql`
 mutation addList($listName: String!) {
-    addList(listName: $listName) {
-      _id
-      listName
-      listMaker
-      createdAt
-      gifts {
-        _id
-        giftName
-        giftUrl
-      }
-    }
+  addList(listName: $listName) {
+    listName
+    listMaker
+    createdAt
   }
+}
 `;
 
-export const  MUTATION_ADDGIFT = gql`
-mutation Mutation($giftName: String!, $giftUrl: String!) {
-    addGift(giftName: $giftName, giftUrl: $giftUrl) {
-      _id
-      giftName
-      giftUrl
-    }
+export const MUTATION_ADDGIFT = gql`
+mutation addGift($listId: ID!, $giftName: String!, $giftUrl: String!) {
+  addGift(listId: $listId, giftName: $giftName, giftUrl: $giftUrl) {
+    giftName
+    giftUrl
+    giftMaker
+    createdAt
+    _id
   }
-`;
+}
+`
 
 export const  MUTATION_DELETEUSER = gql`
 mutation deleteUser($username: String!, $password: String!) {
@@ -67,10 +78,9 @@ mutation deleteList($listId: ID!) {
   }
 `
 export const  MUTATION_DELETEGIFT = gql`
-mutation deleteGift($giftId: ID!) {
-    removeGift(giftId: $giftId) {
-      giftName
-      _id
-    }
+mutation deleteGift($giftId: ID!, $listId: ID!) {
+  removeGift(giftId: $giftId, listId: $listId) {
+    giftName
   }
+}
 `

@@ -14,7 +14,7 @@ const typeDefs = gql `
     listName: String
     listMaker: String
     createdAt: String
-    gifts:[Gift]!
+    gifts:[Gift]
   }
 
   type Gift {
@@ -40,12 +40,12 @@ const typeDefs = gql `
 
   type Mutation{
     addUser(username: String!, email: String!, password: String!): Auth
-    login(username: String!, password: String!): Auth
+    login(email: String!, password: String!): Auth
     addList(listName: String!): List
-    addGift(giftName: String! giftUrl: String!): Gift
+    addGift(listId: ID! giftName: String! giftUrl: String!): Gift
     removeUser(username: String!, password: String!): Auth
     removeList(listId: ID!): List
-    removeGift(giftId: ID!): Gift
+    removeGift(giftId: ID! listId: ID!): Gift
 
   }
 `;

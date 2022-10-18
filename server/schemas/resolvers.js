@@ -17,12 +17,12 @@ const resolvers = {
         list: async (parent, {listId}) => {
             return List.findOne({ _id: listId });
         },
-        me: async (parent, context) => {
+        me: async (parent, args, context) => {
             if (context.user) {
                 return User.findOne({ _id: context.user._id}).populate('lists')
             }
             throw new AuthenticationError('You need to be logged in!')
-        }
+        },
     },
 
     Mutation: {
@@ -31,8 +31,8 @@ const resolvers = {
             const token = signToken(user);
             return { token, user };
         },
-        login: async ( parent, { username, password }) => {
-            const user = await User.findOne({ username });
+        login: async ( parent, { email, password }) => {
+            const user = await User.findOne({ email });
 
             if (!user){
                 throw new AuthenticationError('No user found with this email address')
@@ -46,7 +46,7 @@ const resolvers = {
 
             const token = signToken(user);
 
-            return { token, user};
+            return { token, user };
         },
         addList: async (parent, { listName }, context) => {
             if(context.user){
@@ -58,33 +58,28 @@ const resolvers = {
                 await User.findOneAndUpdate(
                     { _id: context.user._id },
                     { $addToSet: { lists: list._id }},
-                    { new: true ,
-                      runValidators: true,
-                    }
                 );
 
                 return list;
             }
             throw new AuthenticationError('You need to be logged in!');
         },
-        addGift: async (parent, { giftName, giftUrl }, context) => {
+        addGift: async (parent, { listId , giftName, giftUrl }, context) => {
             if(context.user){
-                const gift = await Gift.create({
-                    giftName,
-                    giftUrl,
-                    giftMaker: context.user.username
-                });
-
-                await User.findOneAndUpdate(
-                    { _id: context.user._id},
-                    { $addToSet: { gifts: gift._id }},
-                    { new: true ,
-                      runValidators: true,
-                    }
-                );
-                return gift;
-            }
-            throw new AuthenticationError('You need to be logged in!');
+              return List.findOneAndUpdate(
+                { _id: listId},
+                {
+                  $addToSet: { 
+                    gifts: {giftName, giftUrl, giftMaker: context.user.username },
+                }
+              },
+              {   
+                new: true ,
+                runValidators: true,
+              }
+            );
+         }
+        throw new AuthenticationError('You need to be logged in!');
         },
         removeUser: async (parent, { username, password }, context) => {
             if(context.user) {
@@ -97,44 +92,36 @@ const resolvers = {
             throw new AuthenticationError('You need to be logged in!')
         },
         removeList: async (parent, { listId }, context) => {
-            if(context.user) {
+            if(context.user){
                 const list = await List.findOneAndDelete({
                     _id: listId,
                     listMaker: context.user.username
                 });
 
-                await User.findByOneAndUpdate(
+                await User.findOneAndUpdate(
                     { _id: context.user._id },
-                    { $pull: { lists: list._id }},
-                    { new: true ,
-                      runValidators: true,
-                    }
-                );
-
-                return list;
+                    { $pull: { lists: list._id}}
+                )
             }
-            throw new AuthenticationError('You need to be logged in!');
         },
-        removeGift: async (parent, { giftId }, context) => {
+        removeGift: async (parent, { listId, giftId }, context) => {
             if(context.user){
-                const gift = await Gift.findOneAndDelete({
-                    _id: giftId,
-                    giftMaker: context.user.username
-                });
-
-                await List.findByIdAndUpdate(
-                    { _id: context.user._id},
-                    { $pull: { gifts: gift._id}},
-                    { new: true ,
-                      runValidators: true,
-                    }
+                return List.findOneAndUpdate(
+                    { _id: listId },
+                    { 
+                        $pull: { 
+                            gifts: {
+                                _id: giftId,
+                                giftMaker: context.user.username,
+                            },
+                        },
+                    },
+                    { new: true }
                 );
-
-                return gift;
             }
             throw new AuthenticationError('You need to be logged in!');
         }
     }
 };
 
-module.exports = resolvers
+module.exports = resolvers;

@@ -9,9 +9,9 @@ const MainPageList = ({ users }) => {
         <div>
             {users &&
             users.map((user) => (
-              <ul>
+              <ul key={user._id}>
                 <li>
-                    <div key={user._id} className="card mb-3">
+                    <div className="card mb-3">
                       <div className="card-body bg-light p-2">
                         <p>{user.username}</p>
                       </div>

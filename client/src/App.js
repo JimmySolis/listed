@@ -6,26 +6,29 @@ import {
     createHttpLink,
 } from "@apollo/client";
 import { setContext } from '@apollo/client/link/context';
-import {BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from "./pages/Signup";
+import Profile from "./pages/Profile";
+import AUsersPage from "./pages/AUsersPage";
+import Footer from "./components/Footer";
 import Header from './components/Header';
-
 
 const httpLink = createHttpLink({
     uri: '/graphql',
   });
+  
 
-const authLink = setContext((_, { headers }) => {
+  const authLink = setContext((_, { headers }) => {
     const token = localStorage.getItem('id_token');
 
     return {
         headers: {
             ...headers,
-            authorization: token ? `Bearer ${token}`: '',
-        }
+            authorization: token ? `Bearer ${token}` : '',
+          },
     };
 });
 
@@ -37,25 +40,36 @@ const client = new ApolloClient({
 function App() {
     return (
         <ApolloProvider client={client}>
-            <Router>
-            <div className="flex-column justify-flex-start min-100-vh">
-                <Header />
-            <Routes>
-            <Route 
+           <Router>
+             <div className="flex-column justify-flex-start min-100-vh">
+               <Header />
+                <div className="container">
+                 <Routes>
+                <Route 
                 path="/"
                 element={<Home />}
-              />
-              <Route 
+                 />
+                <Route 
                 path="/login"
                 element={<Login />}
-              />
-              <Route 
+                 />
+                 <Route 
                 path="/signup"
                 element={<Signup />}
-              />
-            </Routes>
-            </div>
-            </Router>
+                 />
+                <Route 
+                path="/me"
+                element={<Profile />}
+                 />
+                  <Route 
+                path="/user/:username"
+                element={<AUsersPage />}
+                 />
+                </Routes>
+              </div>
+            <Footer/>
+           </div>
+         </Router>
         </ApolloProvider>
     )
 }

@@ -16,6 +16,7 @@ query user($username: String!) {
       username
       email
       lists {
+        _id
         listName
         listMaker
         createdAt
@@ -29,4 +30,23 @@ query user($username: String!) {
       }
     }
   }
+`
+
+export const QUERY_ME = gql`
+query me {
+  me {
+    username
+    email
+    _id
+    lists {
+      _id
+      listName
+      gifts {
+        _id
+        giftName
+        giftUrl
+      }
+    }
+  }
+}
 `
