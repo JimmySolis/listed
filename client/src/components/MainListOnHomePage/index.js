@@ -7,7 +7,7 @@ import { QUERY_USER } from '../../utils/queries';
 const MainListOnHomePage = () => {
 
     const { loading, data} = useQuery(QUERY_USER, {
-        variables: { username: "ListedCEO🌐" }
+        variables: { username: "ListedCEO" }
       });
     
       const user = data?.user || {};
