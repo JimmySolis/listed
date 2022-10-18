@@ -12,7 +12,7 @@ const SearchBar = () => {
   const handleSearch = (event) => {
     event.preventDefault();
     
-   window.location.assign(`https://listed.herokuapp.com/user/${userName}`);
+   window.location.replace(`user/${userName}`);
     setUserName('');
     };
 
