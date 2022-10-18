@@ -26,7 +26,7 @@ const MakeAList = () => {
             });
 
           setListName('');
-          window.location.assign('/me');
+          window.location.reload();
         } catch (err){
           console.error(err);
         }
