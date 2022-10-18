@@ -1,7 +1,8 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
 
-import MainPageList from '../components/MainPageList';
+import AllUsersList from '../components/AllUsersList';
+import MainListOnHomePage from '../components/MainListOnHomePage';
 
 import { QUERY_ALLUSER } from '../utils/queries';
 
@@ -15,9 +16,12 @@ const Home = () => {
             {loading ? (
             <div>Loading...</div>
           ) : (
-            <MainPageList
+            <div>
+            <MainListOnHomePage/>
+            <AllUsersList
             users={users}
             />
+            </div>
           )}
             </div>
         </main>

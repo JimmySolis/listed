@@ -38,11 +38,11 @@ const Login = (props) => {
     };
 
     return (
-        <main>
-          <div>
-            <div>
-                <h4>Login </h4>
-                    <div>
+        <main className="flex-row justify-center mb-4">
+          <div className="col-12 col-lg-10">
+            <div className="card">
+                <h4 className="card-header bg-info p-2 bg-opacity-75 p-2">Login </h4>
+                    <div className="card-body">
                         {data ? (
                             <p>
                                 You are logged in! {' '}

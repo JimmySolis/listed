@@ -1,16 +1,13 @@
-import React from "react";
+import React from "react"; 
 
-import { useQuery } from "@apollo/client";
-import { useParams } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
 
-import { QUERY_USER } from '../utils/queries'; 
+import { QUERY_USER } from '../../utils/queries';
 
-const AUsersPage = () => {
-
-    const { username } = useParams();
+const MainListOnHomePage = () => {
 
     const { loading, data} = useQuery(QUERY_USER, {
-        variables: { username: username }
+        variables: { username: "ListedCEO🌐" }
       });
     
       const user = data?.user || {};
@@ -30,7 +27,7 @@ const AUsersPage = () => {
     return(
         <div>
             <h2>
-            Viewing {user.username} Lists:
+           Honorable Lists:
             </h2>
             {(!user.lists.length == 0) ? (
                  <div>
@@ -54,4 +51,4 @@ const AUsersPage = () => {
     )
 }
 
-export default AUsersPage;
+export default MainListOnHomePage;
