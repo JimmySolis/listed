@@ -5,16 +5,11 @@ import "../SearchBar/searchBar.css";
 
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
+import { Link } from "react-router-dom";
 
 const SearchBar = () => {
   const [userName, setUserName] = useState('');
  
-  const handleSearch = (event) => {
-    event.preventDefault();
-    
-   window.location.replace(`user/${userName}`);
-    setUserName('');
-    };
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -25,15 +20,10 @@ const SearchBar = () => {
     };
   
 
-  const clearInput = () => {
-    setUserName('')
-  };
-
   return (
     <div className="search">
       <div className="searchInputs">
         <form
-        onSubmit={handleSearch}
         >
         <input
           type="text"
@@ -43,11 +33,7 @@ const SearchBar = () => {
           onChange={handleChange}
         />
         <div className="searchIcon">
-          {userName.length === 0 ? (
-            <SearchIcon />
-          ) : (
-            <CloseIcon id="clearBtn" onClick={clearInput} />
-          )}
+           <Link to={`/user/${userName}`}><SearchIcon/></Link> 
         </div>
         </form>
         </div>
