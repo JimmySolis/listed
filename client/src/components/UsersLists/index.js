@@ -29,7 +29,7 @@ const UsersLists = ({
                         />
                         </h4>
                         {list.gifts.map((gift) => (
-                            <div key={gift._id}>
+                            <div key={gift._id} className="card-header p-2 ">
                                 <a href={gift.giftUrl} target="_blank"><h6>{gift.giftName}</h6></a>
                                 <RemoveGift
                                 giftId={gift._id}

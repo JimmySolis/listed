@@ -44,7 +44,7 @@ const AddGift = ({ listId }) => {
     };
 
     return (
-        <div>
+        <div className="card-header bg-primary  bg-opacity-25  p-2">
             <h5> Fill Out Your Gift Information: </h5>
 
             {Auth.loggedIn() ? (

@@ -14,7 +14,7 @@ const AllUsersList = ({ users }) => {
                 <li>
                     <div className="card mb-3">
                       <div className="card-body bg-success p-2 bg-opacity-25 ">
-                        <p>{user.username}</p>
+                        <a href={`/user/${user.username}`} style={{textDecoration : "none"}}><p>{user.username}</p></a>
                       </div>
                     </div>
                 </li>

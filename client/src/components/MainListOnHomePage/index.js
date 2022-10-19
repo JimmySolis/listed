@@ -25,14 +25,15 @@ const MainListOnHomePage = () => {
     }
 
     return(
-        <div>
+        <div className="flex-row justify-center">
             <h2>
            Honorable Lists:
             </h2>
+            <div className="d-flex flex-column">
             {(!user.lists.length == 0) ? (
                  <div>
                 {user.lists.map((list) => (
-                    <div className="card mb-3" key={list._id}>
+                    <div className="card mb-3 p-4" key={list._id}>
                         <h3  >{list.listName}</h3>
                         {list.gifts.map((gift) => (
                             <div key={gift._id}>
@@ -47,6 +48,7 @@ const MainListOnHomePage = () => {
                     <h3>No Lists Yet...</h3>
                 </div>
             )}
+        </div>
         </div>
     )
 }

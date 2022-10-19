@@ -12,12 +12,13 @@ const Home = () => {
 
     return (
         <main>
-            <div className="flex-row justify-center">
+            <div>
             {loading ? (
             <div>Loading...</div>
           ) : (
             <div>
             <MainListOnHomePage/>
+            <br/>
             <AllUsersList
             users={users}
             />

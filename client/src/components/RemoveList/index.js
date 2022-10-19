@@ -22,7 +22,8 @@ const RemoveList = ({ listId }) => {
   };
 
   return(
-    <a
+        <a
+    className="d-flex flex-row-reverse"
     onClick={handleChange}
     >🗑</a>
   )
