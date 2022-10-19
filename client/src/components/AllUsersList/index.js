@@ -1,5 +1,7 @@
 import React from "react";
 
+import { Link } from 'react-router-dom';
+
 const AllUsersList = ({ users }) => {
     if(!users.length){
         return <h3> No Users Yet</h3>;
@@ -14,7 +16,7 @@ const AllUsersList = ({ users }) => {
                 <li>
                     <div className="card mb-3">
                       <div className="card-body bg-success p-2 bg-opacity-25 ">
-                        <a href={`/user/${user.username}`} style={{textDecoration : "none"}}><p>{user.username}</p></a>
+                        <Link to={`/user/${user.username}`} style={{textDecoration : "none"}}><p>{user.username}</p></Link>
                       </div>
                     </div>
                 </li>
