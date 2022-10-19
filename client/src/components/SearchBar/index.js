@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import "../SearchBar/searchBar.css";
 
 import SearchIcon from '@mui/icons-material/Search';
-import CloseIcon from '@mui/icons-material/Close';
 import { Link } from "react-router-dom";
 
 const SearchBar = () => {
