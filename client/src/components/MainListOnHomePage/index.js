@@ -1,4 +1,5 @@
 import React from "react"; 
+import { Link } from 'react-router-dom';
 
 import { useQuery } from '@apollo/client';
 
@@ -37,7 +38,7 @@ const MainListOnHomePage = () => {
                         <h3  >{list.listName}</h3>
                         {list.gifts.map((gift) => (
                             <div key={gift._id}>
-                            <li><a href={gift.giftUrl}>{gift.giftName}</a></li>
+                            <li><Link to={gift.giftUrl} target="_blank">{gift.giftName}</Link></li>
                             </div>
                         ))}
                     </div>
